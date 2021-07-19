@@ -6,7 +6,7 @@ project(game)
 
 add_executable(
   game
-  main.cpp
+  particles.cpp
 )
 
 find_package(SFML 2.5.1 COMPONENTS network audio graphics window system)
