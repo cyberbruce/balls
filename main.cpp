@@ -16,14 +16,8 @@ class Box
     bool drop_completed = false;
 
 public:
-    Box(sf::Vector2f position)
+    Box(sf::Vector2f position, sf::Texture & texture)
     {
-        texture = sf::Texture();
-        if (!texture.loadFromFile("../ball.png"))
-        {
-            throw "cannot load file";
-        }
-
         texture.setSmooth(true);
 
         shape = sf::Sprite(texture);
@@ -31,8 +25,8 @@ public:
         shape.setPosition(position);
 
         float LO = 0.8f;
-        float HI = 3.0f;
-        velocity = LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
+        float HI = 4.0f;
+        velocity = LO + static_cast<float>(rand()) /( static_cast<float>(RAND_MAX/(HI-LO)));
         
         Drop();
     }
@@ -81,6 +75,13 @@ int main()
 
     using namespace std;
 
+    sf::Texture texture;
+    if (!texture.loadFromFile("../ball.png"))
+    {
+        throw "cannot load file";
+    }
+
+
     sf::RenderWindow window(sf::VideoMode(game_width, game_height), "Playing");
     window.setVerticalSyncEnabled(true);
 
@@ -105,7 +106,7 @@ int main()
         {
             creating = true;
             auto mousePosition = sf::Mouse::getPosition(window);
-            boxes.push_back(new Box(sf::Vector2f(mousePosition.x, mousePosition.y)));
+            boxes.push_back(new Box(sf::Vector2f(mousePosition.x, mousePosition.y), texture));
         }
 
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space) )
